@@ -26,53 +26,44 @@ const Input = () => {
   const [searchInput, setSearchInput] = useState('');
   const [currentProductId, setCurrentProductId] = useState('');
 
+  //   console.log('last choice', prevUserChoiceRef.current)
+
   useEffect(() => {
     prevUserChoiceRef.current = searchParamSelection;
   }, [searchParamSelection]); //run this code when the value of count changes
 
   const handleSearchParamChange = (event) => {
     setSearchParamSelection(event.target.value);
+    setSearchInput(''); // Reset input whenever criteria changes
+    if (prevUserChoiceRef.current === 'product id') {
+      setCurrentProductId('');
+      setProductId(''); // Reset product ID whenever criteria changes
+    }
   };
 
   const handleInputChange = (event) => {
     setSearchInput(event.target.value);
   };
 
-  //   useEffect(() => {
-  //       let prevSearchParam = searchParamSelection
-
-  //   }, [searchParamSelection])
-
   useEffect(() => {
-    if (searchParamSelection === 'product id') {
-      setCurrentProductId(searchInput); // Set productId based on searchInput value
+    if (searchParamSelection === 'product id' && searchInput.length > 0) {
+      setCurrentProductId(searchInput);
       setProductId(currentProductId);
     }
-  }, [searchParamSelection, setProductId, searchInput]);
-
-  useEffect(() => {
-    setSearchInput(''); // Clear searchInput whenever searchParamSelection changes
-    setCurrentProductId('');
-  }, [searchParamSelection]);
+  }, [searchParamSelection, searchInput]);
 
   //   useEffect(() => {
-  //     setSearchInput(searchInput => {
-  //       if (searchParamSelection === 'product id' && searchInput.length >= 3) {
-  //         // Set productId to the value of searchInput
-  //         setProductId(searchInput); // Use the previous value of searchInput
-  //       }
-  //       return ''; // Reset searchInput
-  //     });
-
-  //   }, [searchParamSelection, setProductId, searchInput]);
-
-  //   useEffect(() => {
-  //     setSearchInput('');
   //     if (searchParamSelection === 'product id') {
-  //         // Set productId to the value of searchInput
-  //         setProductId(searchInput);
-  //       }
-  //   }, [searchParamSelection, searchInput, setProductId]);
+  //       setProductId(currentProductId);
+  //     }
+  //   }, [searchParamSelection, setProductId, currentProductId]);
+
+  //   useEffect(() => {
+  //     if (searchParamSelection === 'product id') {
+  //       setCurrentProductId(searchInput); // Set productId based on searchInput value
+  //       setProductId(currentProductId);
+  //     }
+  //   }, [searchParamSelection, setProductId, searchInput]);
 
   const handleDatePickerChange = (value) => {
     setSearchInput(value?.toString() || ''); // Convert the value to a string
@@ -88,7 +79,7 @@ const Input = () => {
 
   return (
     <div className="d-flex gap-3 mt-5">
-     Now: {searchParamSelection}, before: {prevUserChoiceRef.current}
+      Now: {searchParamSelection}, before: {prevUserChoiceRef.current}
       <div>
         <h5>Search criteria </h5>
         <Form.Select
