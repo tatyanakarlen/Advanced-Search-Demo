@@ -10,6 +10,10 @@
 
 }
 
+.date-picker {
+  margin-top: 1.9rem;
+}
+
 .search-input-group span {
   background-color: transparent;
   border-right: none;

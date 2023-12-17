@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { Form, InputGroup, Button } from 'react-bootstrap';
 import { useContext } from 'react';
 import { FormContext } from './contexts/formContext';
 import { DateRangePicker } from 'rsuite';
+import 'rsuite/dist/rsuite.min.css'
+
 
 const Input = () => {
   const {
@@ -14,27 +16,22 @@ const Input = () => {
     date,
     setDate,
   } = useContext(FormContext);
+
   const [searchParamSelection, setSearchParamSelection] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   const handleSearchParamChange = (event) => {
     setSearchParamSelection(event.target.value);
   };
 
-  {
-    /* <option value="product name">name</option>
-          <option value="product id">id</option>
-          <option value="date">date</option> */
-  }
+  useEffect(() => {
+    setSearchInput('');
+  }, [searchParamSelection]);
 
-  //// for placeholder
-//   let promptText = '';
-//   if (searchParamSelection === 'product name') {
-//     promptText = 'Enter product name';
-//   } else if (searchParamSelection === 'product id') {
-//     promptText = 'Enter product ID';
-//   } else {
-//     promptText = 'Choose criteria...';
-//   }
+  const handleDatePickerChange = (value) => {
+    setSearchInput(value?.toString() || ''); // Convert the value to a string
+  };
+
 
 const promptOptions = {
     'product name': 'Enter product name',
@@ -52,6 +49,7 @@ const promptOptions = {
           className="search-by-dropdown"
           aria-label="Default select example"
           onChange={handleSearchParamChange}
+          value={searchParamSelection}
         >
           <option value="">Select criteria</option>
           <option value="product name">name</option>
@@ -59,19 +57,20 @@ const promptOptions = {
           <option value="date">date</option>
         </Form.Select>
       </div>
-      {
+      {  (searchParamSelection === "product name" || searchParamSelection === "product id" || searchParamSelection === "") ?
         <InputGroup className="search-input-group">
           <FaSearch className="search-icon position-absolute z-1" />
           <Form.Control
             disabled={searchParamSelection === ''}
-            //   onChange={(e) => setSearchInput(e.target.value)}
-            //   value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={searchInput}
             className="search-input position-relative ps-5"
             placeholder={promptText}
             aria-label="Username"
             aria-describedby="basic-addon1"
           />
         </InputGroup>
+        : <DateRangePicker className="date-picker" onChange={handleDatePickerChange}/>
       }
     </div>
   );
