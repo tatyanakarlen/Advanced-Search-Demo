@@ -8,7 +8,7 @@ import Input from './Input';
 import './App.css';
 
 function App() {
-  const [productId, setProductId] = useState('3'); 
+  const [productId, setProductId] = useState(''); 
   const [productName, setProductName] = useState(''); 
   const [date, setDate] = useState(''); 
 
