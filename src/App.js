@@ -8,16 +8,18 @@ import Input from './Input';
 import './App.css';
 
 function App() {
-  const [productId, setProductId] = useState(''); 
+  const [productId, setProductId] = useState('3'); 
   const [productName, setProductName] = useState(''); 
   const [date, setDate] = useState(''); 
 
   return (
     <div className="App">
       <h1>Advanced Search</h1>
+      <FormContext.Provider value={{ productId, setProductId, productName, setProductName, date, setDate }}>
       <Form>
-        <Input></Input>
+        <Input />
       </Form>
+      </FormContext.Provider>
     </div>
   );
 }
