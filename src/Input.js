@@ -36,9 +36,12 @@ const Input = () => {
     setSearchParamSelection(event.target.value);
     setSearchInput(''); // Reset input whenever criteria changes
     if (prevUserChoiceRef.current === 'product id') {
-      setCurrentProductId('');
+    //   setCurrentProductId('');
       setProductId(''); // Reset product ID whenever criteria changes
-    }
+    }  else if (prevUserChoiceRef.current === 'product name') {
+        //   setCurrentProductId('');
+          setProductName(''); // Reset product ID whenever criteria changes
+        }
   };
 
   const handleInputChange = (event) => {
@@ -47,9 +50,13 @@ const Input = () => {
 
   useEffect(() => {
     if (searchParamSelection === 'product id' && searchInput.length > 0) {
-      setCurrentProductId(searchInput);
-      setProductId(currentProductId);
+    //   setCurrentProductId(searchInput);
+      setProductId(searchInput);
     }
+    else if (searchParamSelection === 'product name' && searchInput.length > 0) {
+        //   setCurrentProductId(searchInput);
+          setProductName(searchInput);
+        }
   }, [searchParamSelection, searchInput]);
 
   //   useEffect(() => {
